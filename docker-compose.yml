@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres1:
+    image: postgres:15
+    container_name: postgres1
+    restart: always
+    environment:
+      POSTGRES_DB: db1
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/init-db1.sql:/docker-entrypoint-initdb.d/init.sql
+
+  postgres2:
+    image: postgres:15
+    container_name: postgres2
+    restart: always
+    environment:
+      POSTGRES_DB: db2
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./docker/init-db2.sql:/docker-entrypoint-initdb.d/init.sql

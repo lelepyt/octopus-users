@@ -1,0 +1,55 @@
+openapi: 3.0.1
+info:
+  title: Octopus Users API
+  description: A RESTful API for aggregating user data from multiple sources
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Generated server URL
+paths:
+  /users:
+    get:
+      tags:
+        - user-controller
+      summary: Retrieve a list of users
+      description: Optional filters can be applied, e.g. ?name=John&surname=Doe
+      operationId: getUsers
+      parameters:
+        - name: filters
+          in: query
+          description: Filters for user search
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+        '500':
+          description: Server error
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+components:
+  schemas:
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
